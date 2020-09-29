@@ -24,7 +24,7 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 class DDPGAgent():
     """Interacts with and learns from the environment."""
 
-    def __init__(self, state_size, action_size, random_seed):
+    def __init__(self, state_size, action_size, random_seed, epsilon = 1.0, epsilonDecay = 0.999, minEpsilon = 0.01):
         """Initialize an Agent object.
 
         Params
@@ -36,9 +36,9 @@ class DDPGAgent():
         self.state_size = state_size
         self.action_size = action_size
         self.seed = random.seed(random_seed)
-        self.epsilon = 1.0
-        self.epsilonDecay = 0.999
-        self.minEpsilon = 0.01
+        self.epsilon = epsilon
+        self.epsilonDecay = epsilonDecay
+        self.minEpsilon = minEpsilon
 
         # Actor Network (w/ Target Network)
         self.actor_local = Actor(state_size, action_size, random_seed).to(device)
